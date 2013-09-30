@@ -86,6 +86,4 @@ var Concat = new TypeClass('Concat', ['concat']);
 var concat = Concat.concat;
 Concat.instance('string', {
 	concat: function(a, b) {return a+b},
-}).instance('Array', {
-	concat: function(a, b) {return a.concat(b)},
-});
+}).instance(Array);

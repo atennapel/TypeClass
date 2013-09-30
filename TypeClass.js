@@ -70,7 +70,7 @@ var TypeClass = (function() {
 
 	TypeClass.prototype._wrapMethod = function(m) {
 		return function() {
-			return m.apply(arguments[1], [].slice.call(arguments, 1));
+			return m.apply(arguments[0], [].slice.call(arguments, 1));
 		};
 	};
 
