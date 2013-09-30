@@ -103,6 +103,12 @@ Enum.instance('number', {
 	}
 });
 
+var range = function(a, b) {
+	for(var r = [a]; Eq.neq(a, b);)
+		r.push(a = Enum.succ(a));
+	return r;
+};
+
 // Bool
 var Bool = new TypeClass('Bool', ['bool'], {
 	bool: function(x) {return !!x}
@@ -118,3 +124,33 @@ Bool.instance(['boolean', 'number', 'string'])
 				return Object.keys(o).length > 0;
 			}
 		});
+
+// Str
+var Str = new TypeClass('Str', ['str'], {
+	str: function(x) {return ''+x}
+});
+var str = Str.str;
+Str.instance(['boolean', 'number', 'string']);
+
+// Map
+var Map = new TypeClass('Map', ['map']);
+var map = Map.map;
+Map.instance(Array, {
+	map: function(a, f) {return a.map(f)}
+}).instance([Object, 'object'], {
+	map: function(o, f) {
+		var r = {};
+		for(var k in o) {
+			if(o.hasOwnProperty(k)) {
+				r[k] = f(o[k], k);
+			}
+		}
+		return r;
+	}
+}).instance('string', {
+	map: function(s, f) {
+		for(var i=0,l=s.length,r=[];i<l;i++)
+			r.push(f(s[i]));
+		return r.join('');
+	}
+});
