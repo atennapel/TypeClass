@@ -70,4 +70,40 @@ console.log(
 	eq({a: 1, b: 2}, {a: 1, b: 2}),
 	eq([1, 2, 3], [1, 2, 3])
 );
+
+var Ord = new TypeClass('Ord', ['compare']);
+
+Ord.instance(['number', 'string'], {
+	compare: function(a, b) {
+		return a > b? 1: a < b? -1: 0;
+	}
+});
+
+// Person class
+function Person(name, age) {
+	this.name = name;
+	this.age = age;
+};
+
+Ord.instance('Person', {
+	compare: function(a, b) {
+		return this.compare(a.age, b.age);
+	}
+});
+
+var max = function(a, b) {
+	return Ord.compare(a, b) == 1? a: b;
+};
+
+var arr1 = [
+	new Person('Albert', 10),
+	new Person('Berta', 20),
+	new Person('Costner', 30)
+], arr2 = [1, 5, 7, 3, 8, 7], arr3 = ['b', 'c', 'a'];
+
+console.log(
+	arr1.reduce(max),
+	arr2.reduce(max),
+	arr3.reduce(max)
+);
 ```
