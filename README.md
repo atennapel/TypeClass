@@ -1,0 +1,4 @@
+TypeClass
+=========
+
+TypeClasses for Javascript
