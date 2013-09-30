@@ -14,7 +14,7 @@ var Eq = new TypeClass('Eq', ['eq', 'neq'], {
 var eq = Eq.eq,
 		neq = Eq.neq;
 
-Eq.instance(['number', 'string'], {
+Eq.instance(['number', 'string', 'boolean'], {
 	eq: function(a, b) {
 		return a === b;
 	}

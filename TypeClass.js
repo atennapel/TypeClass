@@ -16,7 +16,7 @@ var TypeClass = (function() {
 				if(a === undefined) throw "First argument can't be undefined."
 				
 				var t = typeof a,
-						f = (t == 'number' || t == 'function' || t == 'string')?
+						f = (t == 'number' || t == 'function' || t == 'string' || t == 'boolean')?
 							t:
 							a.constructor && a.constructor.name?
 								a.constructor.name:
@@ -76,7 +76,7 @@ var TypeClass = (function() {
 
 	TypeClass.prototype.hasInstance = function(a) {
 		var t = typeof a,
-				f = (t == 'number' || t == 'function' || t == 'string')?
+				f = (t == 'number' || t == 'function' || t == 'string' || t == 'boolean')?
 					t:
 					a.constructor && a.constructor.name?
 						a.constructor.name:

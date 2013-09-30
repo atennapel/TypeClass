@@ -87,3 +87,34 @@ var concat = Concat.concat;
 Concat.instance('string', {
 	concat: function(a, b) {return a+b},
 }).instance(Array);
+
+// Enum
+var Enum = new TypeClass('Enum', ['succ', 'pred']);
+var succ = Enum.succ, pred = Enum.pred;
+Enum.instance('number', {
+	succ: function(x) {return x+1},
+	pred: function(x) {return x-1}
+}).instance('string', {
+	succ: function(x) {
+		return String.fromCharCode(x.charCodeAt()+1)+x.slice(1);
+	},
+	pred: function(x) {
+		return String.fromCharCode(x.charCodeAt()-1)+x.slice(1);
+	}
+});
+
+// Bool
+var Bool = new TypeClass('Bool', ['bool'], {
+	bool: function(x) {return !!x}
+});
+var bool = Bool.bool;
+Bool.instance(['boolean', 'number', 'string'])
+		.instance(Array, {
+			bool: function(a) {
+				return a.length > 0;
+			}
+		}).instance([Object, 'object'], {
+			bool: function(o) {
+				return Object.keys(o).length > 0;
+			}
+		});
