@@ -24,7 +24,7 @@ typeclass.instance(type, [methods])
 Creates an instance for this type of this typeclass.
 
 type(string | array<string> | constructor): the type to dispatch on, 
-	can be 'number', 'string', 'function', 'Object', 'Array' or any constructor name as string or constructor function.
+	can be 'boolean', 'number', 'string', 'function', 'Object', 'Array' or any constructor name as string or constructor function.
 	An array can also be used if the implementations of the instances are the same.
 methods(object<string, function> | string): the implementations of the methods of the typeclass.
 	Can also be a string if you want to use an implementation of an existing instance.
