@@ -57,12 +57,11 @@ function Person(name, age) {
 	this.name = name;
 	this.age = age;
 };
+Person.prototype.compare = function(other) {
+	return Ord.compare(this.age, other.age);
+};
 
-Ord.instance('Person', {
-	compare: function(a, b) {
-		return this.compare(a.age, b.age);
-	}
-});
+Ord.instance(Person);
 
 var max = function(a, b) {
 	return Ord.compare(a, b) == 1? a: b;

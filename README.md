@@ -2,6 +2,7 @@ TypeClass
 =========
 
 Typeclasses (dispatches on the first argument at runtime) for Javascript.
+At the moment this relies on the function name of the constructor of a class.
 
 # Methods
 ## Constructor
@@ -16,13 +17,14 @@ fallback(object<string, function>): if a method of an instance is not found,
 
 ## instance
 ```javascript
-typeclass.instance(type, methods)
+typeclass.instance(type, [methods])
 
-type(string | array<string>): the type to dispatch on, 
-	can be 'number', 'string', 'function', 'Object', 'Array' or any constructor name.
+type(string | array<string> | constructor): the type to dispatch on, 
+	can be 'number', 'string', 'function', 'Object', 'Array' or any constructor name as string or constructor function.
 	An array can also be used if the implementations of the instances are the same.
 methods(object<string, function> | string): the implementations of the methods of the typeclass.
 	Can also be a string if you want to use an implementation of an existing instance.
+	If no methods are provided and type is a constructor then the methods will be searched for in the object and prototype.
 ```
 
 # Example
@@ -84,12 +86,11 @@ function Person(name, age) {
 	this.name = name;
 	this.age = age;
 };
+Person.prototype.compare = function(other) {
+	return Ord.compare(this.age, other.age);
+};
 
-Ord.instance('Person', {
-	compare: function(a, b) {
-		return this.compare(a.age, b.age);
-	}
-});
+Ord.instance(Person);
 
 var max = function(a, b) {
 	return Ord.compare(a, b) == 1? a: b;

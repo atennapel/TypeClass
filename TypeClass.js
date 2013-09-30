@@ -1,5 +1,5 @@
 /* @author: Albert ten Napel
- * @version: 1.0
+ * @version: 1.1
  * @date: 2013-9-30
  */
 var TypeClass = (function() {
@@ -34,23 +34,44 @@ var TypeClass = (function() {
 	}
 
 	TypeClass.prototype.instance = function(type, methods) {
-		if(!type || (typeof type != 'string' && !Array.isArray(type)))
-			throw 'An instance needs a type (as string or an array of strings).';
-		if(!methods)
-			throw 'An instance needs methods.';
+		if(!type)
+			throw 'An instance needs a type.';
 
-		var ms =
+		var ms = methods && (
 			typeof methods == 'string'?
 				this._types[methods]:
-				methods;
-		
+				methods);
+
+		if(!ms && typeof type != 'string' && !Array.isArray(type)) {
+			ms = {};
+			for(var i=0,l=this._methods.length;i<l;i++) {
+				var tpm = this._methods[i];
+				var m = type[tpm] || (type.prototype && type.prototype[tpm]);
+				if(m) ms[tpm] = this._wrapMethod(m);
+			}
+		}
+
+		if(typeof type != 'string') {
+			if(Array.isArray(type))
+				type = type.map(function(c) {return typeof c == 'string'? c: c.name});
+			else type = type.name;
+		}
+
+		if(!ms) ms = {};
+
 		if(Array.isArray(type))
 			for(var i=0,l=type.length;i<l;i++)
-				this._types[type[i]] = methods;
+				this._types[type[i]] = ms;
 		else
-			this._types[type] = methods;
+			this._types[type] = ms;
 		
 		return this;
+	};
+
+	TypeClass.prototype._wrapMethod = function(m) {
+		return function() {
+			return m.apply(arguments[1], [].slice.call(arguments, 1));
+		};
 	};
 
 	return TypeClass;
