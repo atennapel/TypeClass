@@ -1,3 +1,8 @@
+/* @author: Albert ten Napel
+ * @version: 1.2
+ * @date: 2013-9-30
+ * Some examples for TypeClass
+ */
 var TypeClass = require('./TypeClass');
 
 var Eq = new TypeClass('Eq', ['eq', 'neq'], {
@@ -76,5 +81,13 @@ var arr1 = [
 console.log(
 	arr1.reduce(max),
 	arr2.reduce(max),
-	arr3.reduce(max)
+	arr3.reduce(max),
+	Eq.hasInstance('asd'),
+	Eq.hasInstance(10),
+	Eq.hasInstance({a: 10}),
+	Eq.hasInstance([2]),
+	Eq.hasInstance(/.*/),
+	Ord.hasInstance('abc'),
+	Ord.hasInstance(10),
+	Ord.hasInstance([1])
 );

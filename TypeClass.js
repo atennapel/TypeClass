@@ -1,5 +1,5 @@
 /* @author: Albert ten Napel
- * @version: 1.1
+ * @version: 1.2
  * @date: 2013-9-30
  */
 var TypeClass = (function() {
@@ -72,6 +72,16 @@ var TypeClass = (function() {
 		return function() {
 			return m.apply(arguments[1], [].slice.call(arguments, 1));
 		};
+	};
+
+	TypeClass.prototype.hasInstance = function(a) {
+		var t = typeof a,
+				f = (t == 'number' || t == 'function' || t == 'string')?
+					t:
+					a.constructor && a.constructor.name?
+						a.constructor.name:
+						t;
+		return !!this._types[f];
 	};
 
 	return TypeClass;

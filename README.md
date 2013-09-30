@@ -8,16 +8,20 @@ At the moment this relies on the function name of the constructor of a class.
 ## Constructor
 ```javascript
 new TypeClass(name, methods, [fallback])
+Create a new typeclass.
 
 name(string): name of the typeclass.
 methods(array<string>): the methods an instance of this typeclass must implement.
 fallback(object<string, function>): if a method of an instance is not found,
 	the method in this object will be used.
+
+returns TypeClass object
 ```
 
 ## instance
 ```javascript
 typeclass.instance(type, [methods])
+Creates an instance for this type of this typeclass.
 
 type(string | array<string> | constructor): the type to dispatch on, 
 	can be 'number', 'string', 'function', 'Object', 'Array' or any constructor name as string or constructor function.
@@ -25,6 +29,17 @@ type(string | array<string> | constructor): the type to dispatch on,
 methods(object<string, function> | string): the implementations of the methods of the typeclass.
 	Can also be a string if you want to use an implementation of an existing instance.
 	If no methods are provided and type is a constructor then the methods will be searched for in the object and prototype.
+
+returns the typeclass
+```
+
+## hasInstance
+```javascript
+typeclass.hasInstance(object)
+
+object: the object to test if an instance exists
+
+returns true if the object has an instance for this typeclass else false
 ```
 
 # Example
